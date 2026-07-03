@@ -1,5 +1,8 @@
-import { Link } from "react-router";
+import { Link , useNavigate } from "react-router";
 import AuthLayout from "./AuthLayout";
+import { useAuth } from "../hooks/useAuth";
+import { useState} from "react";
+
 
 const UserIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -23,8 +26,19 @@ const LockIcon = () => (
 );
 
 const Register = () => {
-  const handleSubmit = (e) => {
+
+  const navigate = useNavigate();
+
+  const {loading , handleRegister }= useAuth();
+
+  const[username, setUsername] = useState("")
+  const  [email, setEmail] = useState("");
+  const  [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await handleRegister({username,email,password});
+    navigate('/')
   };
 
   return (
@@ -43,7 +57,9 @@ const Register = () => {
             <span className="input-icon">
               <UserIcon />
             </span>
-            <input type="text" id="username" name="username" placeholder="Enter username" />
+            <input 
+            onChange={(e)=> setUsername(e.target.value)}
+            type="text" id="username" name="username" placeholder="Enter username" />
           </div>
         </div>
 
@@ -53,7 +69,9 @@ const Register = () => {
             <span className="input-icon">
               <MailIcon />
             </span>
-            <input type="text" id="email" name="email" placeholder="Enter email address" />
+            <input
+            onChange={(e)=> setEmail(e.target.value)}
+            type="text" id="email" name="email" placeholder="Enter email address" />
           </div>
         </div>
 
@@ -63,11 +81,15 @@ const Register = () => {
             <span className="input-icon">
               <LockIcon />
             </span>
-            <input type="password" id="password" name="password" placeholder="Enter password" />
+            <input 
+            onChange={(e)=> setPassword(e.target.value)}
+            type="password" id="password" name="password" placeholder="Enter password" />
           </div>
         </div>
 
-        <button className="btn primary-btn">Register</button>
+        <button className="btn primary-btn">
+         {loading ? <span className="spinner"/> : "Register"}
+          </button>
       </form>
 
       <p className="switch-auth">

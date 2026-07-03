@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router";
 import "../auth.form.scss";
 import logoLight from "../../../assets/images/logos/logo-light-removebg-preview.png";
-import coatGuy from "../../../assets/images/auth/coat-guy.png"
+import career from "../../../assets/images/auth/career-illu.png"
 
 const DocIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -87,16 +87,9 @@ const AuthLayout = ({ children }) => {
             ))}
           </ul>
 
-          {/* TODO: replace this CSS scene with your illustration asset if you have one.
-              e.g. <img src="/assets/hiker-illustration.svg" className="illustration-img" /> */}
+
           <div className="illustration" aria-hidden="true">
-            {/* <svg viewBox="0 0 500 240" preserveAspectRatio="xMidYMax slice">
-              <path className="mtn mtn-1" d="M0 240 L60 140 L130 200 L200 110 L280 200 L340 150 L420 210 L500 150 L500 240 Z" />
-              <path className="mtn mtn-2" d="M0 240 L90 170 L170 220 L250 150 L330 220 L400 180 L500 230 L500 240 Z" />
-              <path className="river" d="M0 235 C 100 210, 150 245, 260 220 C 340 200, 400 235, 500 225 L500 240 L0 240 Z" />
-              <circle className="hiker-dot" cx="250" cy="150" r="4" />
-            </svg> */}
-            <img src={coatGuy} className="illustration-img" alt="" />
+            <img src={career} className="illustration-img" alt="" />
           </div>
         </div>
 
