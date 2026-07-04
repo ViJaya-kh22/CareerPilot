@@ -1,7 +1,11 @@
 import express from 'express';
-import authRouter from './routes/auth.routes.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
+
+/** import all the routes  */
+import authRouter from './routes/auth.routes.js';
+import interviewRouter from './routes/interview.ai.routes.js';
+
 
 const app = express();
 
@@ -12,6 +16,9 @@ app.use(cors({
     credentials: true
 }))
 
-app.use("/api/auth" , authRouter)
+
+/** API prefix */
+app.use("/api/auth" , authRouter);
+app.use("/api/interview" , interviewRouter)
 
 export default app;

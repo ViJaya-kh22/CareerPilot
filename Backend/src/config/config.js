@@ -18,6 +18,7 @@ const config = {
     MONGO_URI : process.env.MONGO_URI,
     JWT_SECRET : process.env.JWT_SECRET,
     GOOGLE_GEMINI_API_KEY : process.env.GOOGLE_GEMINI_API_KEY,
+    DEV_MODE : process.env.DEV_MODE === "true"
 }
 
 export default config;
