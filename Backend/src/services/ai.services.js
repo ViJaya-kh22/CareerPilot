@@ -1,18 +1,19 @@
 import { GoogleGenAI } from "@google/genai";
 import config from "../config/config.js";
 import * as z from "zod";
-import {
-  jobDescription,
-  selfDescription,
-  resume,
-} from "../mock/mockUserData.js";
+import { jobDescription,selfDescription,resume,} from "../mock/mockUserData.js";
 import  mockReport  from "../mock/mockReport.js";
+import puppeteer from 'puppeteer';
 
 const ai = new GoogleGenAI({
   apiKey: config.GOOGLE_GEMINI_API_KEY,
 });
 
-const interviewReportJsonSchema = {
+
+
+export async function generateInterviewReport({resume,jobDescription,selfDescription,}) {
+
+  const interviewReportJsonSchema = {
   type: "object",
   properties: {
     matchScore: {
@@ -20,7 +21,7 @@ const interviewReportJsonSchema = {
       description:
         "A percentage score from 0 to 100 indicating how well the candidate's resume and self-description match the provided job description.",
     },
-
+    
     technicalQuestions: {
       type: "array",
       description:
@@ -98,7 +99,7 @@ const interviewReportJsonSchema = {
       },
     },
 
-    preprationPlan: {
+    preparationPlan: {
       type: "array",
       description:
         "A personalized multi-day interview preparation plan designed to improve the candidate's readiness for this specific job.",
@@ -129,6 +130,10 @@ const interviewReportJsonSchema = {
         required: ["day", "focus", "tasks"],
       },
     },
+    title : {
+      type : "string",
+      description : "Extract or infer the primary job title from the job description. Return only a concise role name (e.g., 'Frontend Developer', 'Backend Engineer', 'Data Analyst'). Do not include company names, locations, experience levels, or extra formatting."
+    }
   },
 
   required: [
@@ -136,19 +141,13 @@ const interviewReportJsonSchema = {
     "technicalQuestions",
     "behavioralQuestions",
     "skillGaps",
-    "preprationPlan",
+    "preparationPlan",
   ],
 };
 
 const interviewReportSchema = z.fromJSONSchema(interviewReportJsonSchema);
 
-async function generateInterviewReport({
-  resume,
-  jobDescription,
-  selfDescription,
-}) {
-
-  const prompt = `
+const prompt = `
     You are an expert interviewer, hiring manager, and career coach.
 
 Your task is to analyze the candidate's profile and generate a structured interview preparation report.
@@ -212,17 +211,20 @@ Important Rules:
 - Return only valid JSON that exactly matches the provided schema.   
 `;
 
-  const response = await ai.interactions.create({
+  const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
-    input: prompt,
+    contents: prompt,
     config: {
       responseMimeType: "application/json",
       responseSchema: interviewReportJsonSchema,
     },
   });
-}
 
-async function generateInterviewReportMock({resume , jobDescription, selfDescription}) {
+  const report = JSON.parse(response.text);
+  return report
+};
+
+export async function generateInterviewReportMock({resume , jobDescription, selfDescription}) {
   if (config.DEV_MODE) {
     console.log("Using Mock Data");
     return(mockReport) ;
@@ -231,6 +233,107 @@ async function generateInterviewReportMock({resume , jobDescription, selfDescrip
   console.log("Calling gemini");
 
   return generateInterviewReport({ resume, jobDescription, selfDescription });
+};
+
+async function generatePdfFromHtml(htmlcontent) {
+
+  const browser = await puppeteer.launch();
+
+  const page = await browser.newPage();
+
+  await page.setContent(htmlcontent, {waitUntil : 'networkidle0'});
+
+  const pdfBuffer = await page.pdf({
+     format : 'A4',
+     margin : {
+      top : '15px',
+      bottom :  '15px' ,
+      left :' 15px' ,
+      right: '15px'
+     }
+  });
+
+  await browser.close();
+
+  return pdfBuffer
+
 }
 
-export default generateInterviewReportMock;
+export async function generateReusmePdf({resume, selfDescription, jobDescription}) {
+
+  const resumePdfSchema = {
+  type : "object",
+  properties : {
+    pdfHtml : {
+      type : "string",
+      description :  "A complete, self-contained HTML document for a professional ATS-friendly resume. Include <!DOCTYPE html>, <html>, <head>, and <body> with all CSS embedded inside a <style> tag. Do not use external CSS, JavaScript, images, fonts, or CDN resources. The HTML should be clean, semantic, A4-print optimized, and ready to be converted directly into a PDF using Puppeteer without any additional processing."
+    }
+  }
+};
+
+  const prompt = `You are an expert resume writer, ATS optimization specialist, and technical recruiter.
+
+Your task is to generate a professional, ATS-friendly resume as a complete HTML document.
+
+You will receive:
+1. The candidate's existing resume.
+2. A self-description written by the candidate, which provides additional context about their skills, interests, strengths, goals, and personality.
+3. The target job description.
+
+Your goal is to improve and tailor the resume for the target job by:
+- Optimizing the professional summary based on the self-description and job description.
+- Rewriting experience and project descriptions using strong action verbs and measurable impact where supported by the provided information.
+- Highlighting the candidate's most relevant technical skills and projects for the target role.
+- Naturally incorporating important ATS keywords from the job description whenever they accurately reflect the candidate's background.
+- Improving clarity, formatting, grammar, and readability.
+- Maintaining a professional and modern resume structure.
+
+Rules:
+- Never fabricate work experience, projects, certifications, education, companies, dates, technologies, or achievements.
+- Only use information found in the resume or self-description.
+- If the job description mentions skills the candidate does not possess, do not add them.
+- If a section has no information, omit it.
+- Preserve factual accuracy while making the resume as competitive as possible.
+
+Output Requirements:
+- Return ONLY the HTML document.
+- Do not wrap the response in Markdown or code fences.
+- Include <!DOCTYPE html>, <html>, <head>, and <body>.
+- Embed all CSS inside a single <style> tag.
+- Do not use JavaScript.
+- Do not use external CSS, fonts, images, icons, SVGs, or CDN resources.
+- The HTML must be completely self-contained.
+- Optimize the layout for A4 paper size with appropriate margins.
+- Keep the resume to one page whenever reasonably possible.
+- Use semantic HTML.
+- Ensure the design is clean, modern, minimal, and ATS-friendly.
+- Use clear section headings and consistent spacing.
+- The generated HTML must be ready to be converted directly into a PDF using Puppeteer without any additional processing.
+
+Candidate Resume:
+${resume}
+
+Candidate Self Description:
+${selfDescription}
+
+Target Job Description:
+${jobDescription}`
+
+ const response = await ai.models.generateContent({
+   model: "gemini-2.5-flash",
+   contents : prompt,
+     config: {
+      responseMimeType: "application/json",
+      responseSchema: resumePdfSchema,
+    },
+ });
+
+ const jsonPdfContent = JSON.parse(response.text);
+
+ const pdfBuffer = await generatePdfFromHtml(jsonPdfContent.pdfHtml)
+
+ return pdfBuffer
+
+}
+
+

@@ -21,7 +21,7 @@ body,
 
 .auth-main {
   height: 100vh;
-  height: 100dvh;
+  // height: 100dvh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -35,10 +35,10 @@ body,
 
 .auth-card {
   display: flex;
-  width:min(1200px,100%);
-  max-width: 1200px;
-  min-height:680px;
-  max-height:90vh;
+  width:min(1000px,100%);
+  max-width: 1100px;
+  // min-height:680px;
+  max-height:85vh;
   border-radius: clamp(1rem, 2vw, 2rem);
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(15, 41, 66, 0.12);

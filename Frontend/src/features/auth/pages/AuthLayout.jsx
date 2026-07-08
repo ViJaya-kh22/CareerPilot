@@ -87,10 +87,10 @@ const AuthLayout = ({ children }) => {
             ))}
           </ul>
 
-
-          <div className="illustration" aria-hidden="true">
+          {/* //illustration */}
+          {/* <div className="illustration" aria-hidden="true">
             <img src={career} className="illustration-img" alt="" />
-          </div>
+          </div> */}
         </div>
 
         <div className="auth-right">

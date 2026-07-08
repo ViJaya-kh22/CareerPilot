@@ -1,128 +1,145 @@
 
 const mockReport = {
-"matchScore": 85,
-"technicalQuestions": [
-{
-"question": "In your CareerPilot project, you used Axios for API integration. How would you handle a scenario where an API request fails or takes too long to respond?",
-"intention": "To evaluate the candidate's understanding of error handling, asynchronous programming, and user experience considerations.",
-"answer": "The candidate should discuss using try-catch blocks with async/await and Axios interceptors for global error handling. They should mention setting timeouts in Axios configurations and implementing UI states like loading spinners or error messages to inform the user."
-},
-{
-"question": "The job description emphasizes clean and reusable code. How do you determine when a piece of UI should be turned into a reusable React component?",
-"intention": "To assess the candidate's understanding of component-based architecture and DRY (Don't Repeat Yourself) principles.",
-"answer": "Focus on identifying repetitive patterns in the UI and logic. Mention criteria such as props-driven customization, state encapsulation, and keeping components small for better maintainability and testing."
-},
-{
-"question": "How would you implement the drag-and-drop functionality in TaskFlow without using a third-party library, or how would you optimize it if using one?",
-"intention": "To test deep knowledge of DOM events or efficiency in using external libraries.",
-"answer": "Explain the use of HTML5 Drag and Drop API events like onDragStart, onDragOver, and onDrop. If using a library like react-beautiful-dnd, focus on managing the underlying state array efficiently to prevent unnecessary re-renders."
-},
-{
-"question": "Since TypeScript is a preferred skill for this role, can you explain the benefits of using Interfaces versus Types when defining component props?",
-"intention": "To gauge the candidate's theoretical knowledge of TypeScript despite it being a missing skill in their resume.",
-"answer": "Discuss how Interfaces are generally better for public APIs and support declaration merging, whereas Types are more flexible for unions, intersections, and aliases. Mention how either choice improves code reliability through compile-time checking."
+
+  "matchScore": 72,
+  "technicalQuestions": [
+    {
+      "question": "You've worked with Context API for state management. Can you explain a scenario where you might choose Redux over Context API, and what are the trade-offs?",
+      "intention": "To evaluate the candidate's understanding of different state management solutions, their pros and cons, and their ability to choose the right tool for a given problem, especially considering they haven't worked with Redux.",
+      "answer": "Discuss application complexity, performance concerns with frequent updates, and the need for a centralized, predictable state container. Mention Redux's developer tooling, middleware, and scalability for large applications, contrasted with Context API's simplicity for less complex global state."
+    },
+    {
+      "question": "Describe your approach to integrating REST APIs in your React projects. How do you handle asynchronous data fetching, loading states, and potential errors?",
+      "intention": "To assess the candidate's practical experience with API integration, error handling, and user experience considerations in a frontend application.",
+      "answer": "Explain using `useEffect` for data fetching, `useState` for loading and error states. Discuss using `try-catch` blocks for error handling, displaying error messages to users, and showing loading indicators while data is being fetched. Mention `axios` or `fetch`."
+    },
+    {
+      "question": "The job description mentions SCSS/CSS preprocessors and responsive design. Can you explain how you've used SCSS in your projects and your methodology for ensuring a consistent responsive layout across different devices?",
+      "intention": "To gauge the candidate's practical skills in modern CSS techniques, including preprocessors and implementing responsive UIs.",
+      "answer": "Describe using SCSS features like variables, mixins, nesting, and partials to organize styles. For responsive design, explain using media queries, flexible units (rem, em, percentages), and CSS Flexbox or Grid for layout adaptation, possibly mentioning a mobile-first approach."
+    },
+    {
+      "question": "Your projects include JWT Authentication and protected routes. Can you walk us through the full flow of how a user logs in, receives a token, and how that token is then used to access protected resources in your React application?",
+      "intention": "To evaluate the candidate's understanding of secure authentication flows, token management, and client-side authorization logic, which is a bonus skill in the JD.",
+      "answer": "Explain sending credentials to a backend, receiving a JWT, storing it (e.g., in `localStorage` or `httpOnly` cookies), attaching it to subsequent requests, and using higher-order components or React Router for protected routes by checking token validity."
+    },
+    {
+      "question": "Given your experience with Git/GitHub, describe a scenario where you encountered a complex merge conflict and how you resolved it. What steps did you take?",
+      "intention": "To assess the candidate's practical Git skills, problem-solving abilities in a version control context, and readiness for collaborative development, especially as team experience is a gap.",
+      "answer": "Describe identifying conflicting files, using `git status` and `git diff`, manually editing the conflicting sections, testing the changes, and then committing the resolution. Emphasize understanding the desired outcome from both branches."
+    }
+  ],
+  "behavioralQuestions": [
+    {
+      "question": "You mentioned being a self-taught developer and building several projects. Can you describe a significant technical challenge you faced while learning or during a project, and how you approached solving it?",
+      "intention": "To assess the candidate's problem-solving skills, initiative, persistence, and ability to learn independently.",
+      "answer": "Use the STAR method. Describe the Situation (the challenge), Task (what you needed to do), Action (steps taken, resources consulted, debugging process), and Result (the solution and what you learned)."
+    },
+    {
+      "question": "The job involves working in a product team. Although you haven't worked in a formal team CI/CD environment, how do you envision contributing to a team, collaborating on code, and handling feedback on your work?",
+      "intention": "To evaluate the candidate's understanding of teamwork, communication skills, openness to feedback, and their hypothetical approach to collaboration, addressing a stated experience gap.",
+      "answer": "Discuss proactive communication, code reviews (both giving and receiving), using version control effectively for collaboration, contributing ideas respectfully, and adapting to team processes. Emphasize a willingness to learn and integrate into a team."
+    },
+    {
+      "question": "Describe a time when you had to prioritize multiple tasks or features for one of your projects. How did you decide what to work on first, and what was the outcome?",
+      "intention": "To assess the candidate's organizational skills, ability to prioritize, decision-making process, and understanding of project management principles.",
+      "answer": "Use the STAR method. Explain how you evaluated importance and urgency, considered dependencies, or aligned with project goals. Describe the steps you took to manage your workload and the impact of your prioritization decisions on the project."
+    }
+  ],
+  "skillGaps": [
+    {
+      "skill": "Professional Frontend Development Experience (2-3 years)",
+      "severity": "High"
+    },
+    {
+      "skill": "Redux State Management",
+      "severity": "Medium"
+    },
+    {
+      "skill": "Team-based CI/CD Workflows",
+      "severity": "Medium"
+    },
+    {
+      "skill": "Performance Optimization in React Apps",
+      "severity": "Low"
+    }
+  ],
+  "preparationPlan": [
+    {
+      "day": 1,
+      "focus": "React Core Concepts & Component Design",
+      "tasks": [
+        "Review React Hooks (useState, useEffect, useContext, useRef, useCallback, useMemo).",
+        "Practice building reusable, atomic React components with proper prop-drilling vs. Context API usage.",
+        "Refactor an existing project component to improve reusability or performance."
+      ]
+    },
+    {
+      "day": 2,
+      "focus": "State Management: Redux & Redux Toolkit",
+      "tasks": [
+        "Study Redux core principles (store, actions, reducers, dispatch).",
+        "Learn Redux Toolkit for simplified Redux setup and usage.",
+        "Build a small React application or integrate Redux into an existing project to manage a few global states."
+      ]
+    },
+    {
+      "day": 3,
+      "focus": "Advanced SCSS & Responsive Design Techniques",
+      "tasks": [
+        "Deep dive into SCSS features: functions, control directives (@if, @for, @each), advanced mixins.",
+        "Implement a complex responsive layout using CSS Grid and Flexbox, focusing on mobile-first design.",
+        "Practice building a small component with a custom design system using SCSS variables and mixins."
+      ]
+    },
+    {
+      "day": 4,
+      "focus": "REST API Integration & Robust Error Handling",
+      "tasks": [
+        "Review best practices for async operations with `async/await` and `try-catch`.",
+        "Implement robust API error handling and display user-friendly messages for different error types (e.g., 401, 404, 500).",
+        "Practice implementing loading states, empty states, and retry mechanisms for API calls."
+      ]
+    },
+    {
+      "day": 5,
+      "focus": "React Performance Optimization & Authentication Flows",
+      "tasks": [
+        "Study and apply React performance techniques: `React.memo`, `useCallback`, `useMemo`, lazy loading, and code splitting.",
+        "Optimize a component in one of your existing projects for performance using browser developer tools.",
+        "Review and be ready to explain authentication flows, including token refresh strategies, for protected routes."
+      ]
+    },
+    {
+      "day": 6,
+      "focus": "Git Workflow & CI/CD Fundamentals",
+      "tasks": [
+        "Practice advanced Git commands: `rebase`, `cherry-pick`, resolving complex merge conflicts.",
+        "Research common CI/CD concepts (e.g., automated testing, build, deployment pipelines).",
+        "Understand the role of Git hooks and basic branching strategies (e.g., Git Flow, GitHub Flow)."
+      ]
+    },
+    {
+      "day": 7,
+      "focus": "Mock Interview & Behavioral Question Practice",
+      "tasks": [
+        "Conduct a mock technical interview focusing on all covered topics and identified skill gaps.",
+        "Practice answering behavioral questions using the STAR method, tailoring responses to highlight your strengths and self-learning ability.",
+        "Refine your project descriptions to clearly articulate technical challenges and solutions from a frontend perspective."
+      ]
+    }
+  ],
+  "user": {
+    "$oid": "6a4a3a2f497e1f3a687ef416"
+  },
+  "createdAt": {
+    "$date": "2026-07-05T11:10:06.636Z"
+  },
+  "updatedAt": {
+    "$date": "2026-07-05T11:10:06.636Z"
+  },
+  "__v": 0
 }
-],
-"behavioralQuestions": [
-{
-"question": "Describe a situation where you had a disagreement with a team member or peer regarding a technical implementation. How did you resolve it?",
-"intention": "To evaluate communication skills, professional maturity, and ability to work in Agile teams.",
-"answer": "Use the STAR method. Focus on objective reasoning, looking at pros and cons of both approaches, and reaching a consensus that prioritizes the project's goals over personal preference."
-},
-{
-"question": "Tell me about a time you had to learn a new technology or tool quickly to complete a project.",
-"intention": "To assess adaptability and the 'passion for learning' mentioned in the self-description.",
-"answer": "Apply the STAR structure to describe a specific tool (e.g., Firebase or JWT). Highlight the learning resources used (documentation, tutorials) and the successful application of that knowledge within a tight deadline."
-},
-{
-"question": "Give an example of a difficult bug you encountered in production or during development and the steps you took to debug it.",
-"intention": "To evaluate analytical thinking and familiarity with debugging tools.",
-"answer": "Use the STAR method to describe the symptom of the bug. Mention using React DevTools, Chrome Debugger, or console logging to isolate the root cause and explain the logic behind the final fix."
-}
-],
-"skillGaps": [
-{
-"skill": "TypeScript",
-"severity": "Medium"
-},
-{
-"skill": "Unit Testing (Jest/React Testing Library)",
-"severity": "Medium"
-},
-{
-"skill": "Redux / Advanced State Management",
-"severity": "Low"
-},
-{
-"skill": "Performance Optimization (Lighthouse, Memoization)",
-"severity": "Low"
-}
-],
-"preparationPlan": [
-{
-"day": "1",
-"focus": "JavaScript Fundamentals & ES6+",
-"tasks": [
-"Review Closures, Promises, and Async/Await.",
-"Practice array methods (map, filter, reduce) common in React development.",
-"Solve 3-5 coding challenges on platforms like LeetCode or HackerRank focused on strings and arrays."
-]
-},
-{
-"day": "2",
-"focus": "React Core & Hooks",
-"tasks": [
-"Deep dive into useEffect dependency arrays and cleanup functions.",
-"Review the Virtual DOM concept and how React reconciliation works.",
-"Re-read documentation on useMemo and useCallback for performance optimization."
-]
-},
-{
-"day": "3",
-"focus": "State Management & API Integration",
-"tasks": [
-"Build a small project using React Context API to manage a global theme or user session.",
-"Practice writing custom hooks for fetching data with Axios.",
-"Review JWT authentication flow and how to store tokens securely."
-]
-},
-{
-"day": "4",
-"focus": "TypeScript Basics",
-"tasks": [
-"Learn basic types, interfaces, and enums.",
-"Convert a small JavaScript React component into a TypeScript component (.tsx).",
-"Understand how to type event handlers and API responses."
-]
-},
-{
-"day": "5",
-"focus": "Testing Fundamentals",
-"tasks": [
-"Watch a tutorial on Jest and React Testing Library (RTL).",
-"Write 2-3 simple unit tests for a reusable component (e.g., a Button or Input).",
-"Understand the difference between unit, integration, and E2E testing."
-]
-},
-{
-"day": "6",
-"focus": "CSS, Responsive Design & Debugging",
-"tasks": [
-"Review CSS Grid and Flexbox layouts for responsiveness.",
-"Practice identifying performance bottlenecks using Chrome DevTools Performance tab.",
-"Review common Tailwind CSS patterns for rapid UI development."
-]
-},
-{
-"day": "7",
-"focus": "Soft Skills & Project Walkthrough",
-"tasks": [
-"Prepare STAR method responses for the behavioral questions listed in this report.",
-"Practice explaining the technical architecture of 'CareerPilot' and 'TaskFlow' clearly.",
-"Conduct a mock interview focusing on explaining 'why' technical choices were made."
-]
-}
-]
-}
+
 
 export default mockReport;

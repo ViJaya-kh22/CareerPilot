@@ -1,0 +1,129 @@
+@import "./interviewResults.scss";
+
+.qp {
+  width: full;
+}
+
+.qp-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
+  justify-content: center;
+  align-items: center;
+}
+
+.qp-title {
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.qp-count {
+  font-size: 13px;
+  color: $text-muted;
+}
+
+.qp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.q-card {
+  padding: 22px;
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+
+  &__top {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__index {
+    flex-shrink: 0;
+    font-family: $font-mono;
+    font-size: 12px;
+    font-weight: 700;
+    color: $teal;
+    padding-top: 2px;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  &__question {
+    font-size: 15px;
+    line-height: 1.55;
+    color: $text-primary;
+    font-weight: 500;
+  }
+
+  &__intention {
+    font-size: 13px;
+    line-height: 1.55;
+    color: $text-secondary;
+  }
+
+  &__intention-label {
+    display: block;
+    font-family: $font-mono;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $text-muted;
+    margin-bottom: 4px;
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 16px 0 0 30px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: $teal;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.15s ease;
+    }
+
+    &.is-open svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__answer {
+    margin: 14px 0 0 32px;
+    padding: 16px 18px;
+    background: $surface-alt;
+    border: 1px solid $border;
+    border-left: 2px solid $teal;
+    border-radius: $radius-sm;
+
+    p {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: $text-secondary;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .q-card__toggle,
+  .q-card__answer {
+    margin-left: 0;
+  }
+}

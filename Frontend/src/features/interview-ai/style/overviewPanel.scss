@@ -1,0 +1,228 @@
+@import "./interviewResults.scss";
+
+.ov {
+  width: full;
+  height: 100vh;
+}
+
+.ov-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 24px 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.ov-eyebrow {
+  font-family: $font-mono;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $teal;
+}
+
+.ov-title {
+  font-size:1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+// ---------------------------------------------------------------
+// Score card
+// ---------------------------------------------------------------
+.ov-score-card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 28px;
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+}
+
+.score-ring {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  &__track {
+    fill: none;
+    stroke: $surface-alt;
+    stroke-width: 10;
+  }
+
+  &__value {
+    fill: none;
+    stroke: $teal;
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.6s ease;
+  }
+
+  &__label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+  }
+
+  &__number {
+    font-family: $font-mono;
+    font-size: 32px;
+    font-weight: 700;
+    color: $text-primary;
+    position: absolute;
+    top : 45px
+  }
+
+  &__percent {
+    font-family: $font-mono;
+    font-size: 16px;
+    color: $text-secondary;
+    margin-left: 2px;
+    position: absolute;
+    top : 60px;
+    left: 80px;
+  }
+}
+
+.ov-score-card__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.ov-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  background: $sev-low-soft;
+  color: $teal;
+  border: 1px solid rgba(15, 148, 136, 0.3);
+
+  &--good {
+    background: $sev-medium-soft;
+    color: $sev-medium;
+    border-color: rgba(224, 169, 77, 0.3);
+  }
+
+  &--partial,
+  &--needs {
+    background: $sev-high-soft;
+    color: $sev-high;
+    border-color: rgba(226, 87, 76, 0.3);
+  }
+}
+
+.ov-score-card__note {
+  font-size: 14px;
+  line-height: 1.5;
+  color: $text-secondary;
+  max-width: 46ch;
+}
+
+.ov-divider {
+  height: 1px;
+  background: $border;
+  margin: 28px 0;
+}
+
+// ---------------------------------------------------------------
+// Skill gaps
+// ---------------------------------------------------------------
+.ov-gaps__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+ 
+}
+
+.ov-gaps__title {
+  font-size: 16px;
+  font-weight: 600;
+  justify-self: center;
+}
+
+.ov-gaps__count {
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $text-muted;
+}
+
+.ov-gaps__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.gap-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+
+  &__skill {
+    font-size: 14px;
+    color: $text-primary;
+    line-height: 1.4;
+  }
+}
+
+.gap-pill {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: $font-mono;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &--low {
+    background: $sev-low-soft;
+    color: $sev-low;
+  }
+
+  &--medium {
+    background: $sev-medium-soft;
+    color: $sev-medium;
+  }
+
+  &--high {
+    background: $sev-high-soft;
+    color: $sev-high;
+  }
+}
+
+@media (max-width: 640px) {
+  .ov-score-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .ov-score-card__copy {
+    align-items: center;
+  }
+
+  .ov-gaps__grid {
+    grid-template-columns: 1fr;
+  }
+}

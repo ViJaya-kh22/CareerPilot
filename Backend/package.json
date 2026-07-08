@@ -23,6 +23,7 @@
     "mongoose": "^9.7.3",
     "multer": "^2.2.0",
     "pdf-parse-fork": "^1.2.0",
+    "puppeteer": "^25.3.0",
     "zod": "^4.4.3"
   }
 }

@@ -5,6 +5,9 @@ const api = axios.create({
     withCredentials : true
 });
 
+/**
+ * Registers a new user account with the provided credentials.
+ */
 export async function register({username, email, password}){
     try {
         const response = await api.post("/api/auth/register", {
@@ -17,6 +20,9 @@ export async function register({username, email, password}){
     }
 };
 
+/**
+ * Authenticates a user and creates a new login session.
+ */
 export async function login({email, password}){
 
     try {
@@ -30,6 +36,9 @@ export async function login({email, password}){
     
 };
 
+/**
+ * Logs out the currently authenticated user and terminates their session.
+ */
 export async function logout(){
 
     try {
@@ -42,6 +51,9 @@ export async function logout(){
     
 };
 
+/**
+ * Retrieves the profile information of the currently authenticated user.
+ */
 export async function getMe(){
 
     try {
