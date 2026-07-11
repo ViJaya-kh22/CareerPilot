@@ -40,14 +40,14 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await handleLogin({email,password});
-    navigate('/');
+    navigate('/home');
   };
 
   return (
     <AuthLayout>
       <div className="form-header">
         <h1>
-          Welcome Back! 
+          Welcome Back
         </h1>
         <p>Continue building your career with AI.</p>
       </div>

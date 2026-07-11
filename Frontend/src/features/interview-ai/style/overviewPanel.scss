@@ -1,7 +1,7 @@
 @import "./interviewResults.scss";
 
 .ov {
-  width: full;
+  width: 100%;
   height: 100vh;
 }
 
@@ -73,6 +73,7 @@
     display: flex;
     align-items: baseline;
     justify-content: center;
+   
   }
 
   &__number {
@@ -215,13 +216,14 @@
 @media (max-width: 640px) {
   .ov-score-card {
     flex-direction: column;
-    text-align: center;
+    align-items: center;
+    justify-content: center;
   }
 
   .ov-score-card__copy {
     align-items: center;
   }
-
+  
   .ov-gaps__grid {
     grid-template-columns: 1fr;
   }

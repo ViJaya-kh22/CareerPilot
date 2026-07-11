@@ -21,7 +21,6 @@ body,
 
 .auth-main {
   height: 100vh;
-  // height: 100dvh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -30,20 +29,20 @@ body,
   padding: 1rem;
   overflow: hidden;
   font-family: "Plus Jakarta Sans", sans-serif;
-  
 }
 
 .auth-card {
   display: flex;
-  width:min(1000px,100%);
-  max-width: 1100px;
-  // min-height:680px;
-  max-height:85vh;
-  border-radius: clamp(1rem, 2vw, 2rem);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-width: 0;              // was 30vw — killed small screens
+  max-width: 480px;          // was 50vw — now a real fixed cap
+  max-height: 90vh;
+  border-radius: 1rem;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(15, 41, 66, 0.12);
   background: $bg-page;
- 
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -52,203 +51,14 @@ body,
   }
 }
 
-.auth-left {
-  flex: 1.1;
-  min-width: 0;
-  position: relative;
+.auth-right {
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  background: #fff;
   padding: 2rem;
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  overflow: hidden;
-  background: linear-gradient(160deg, #eafbf9 0%, #d8f3f0 45%, #c9eef0 100%);
-  border-radius: clamp(1rem, 2vw, 2rem) 0 0 clamp(1rem, 2vw, 2rem);
-
-  @media (max-width: 900px) {
-    border-radius: clamp(1rem, 2vw, 2rem) clamp(1rem, 2vw, 2rem) 0 0;
-    overflow-y: visible;
-    padding-bottom: 2rem;
-  }
-
-  
-.auth-left::before{
-    content:"";
-    position:absolute;
-    width:160px;
-    height:160px;
-    border-radius:50%;
-    background:rgba(255,255,255,.18);
-    bottom:120px;
-    left:-40px;
-}
-
-  .auth-left::after{
-    content:"";
-    position:absolute;
-    width:220px;
-    height:220px;
-    border-radius:50%;
-    background:rgba(255,255,255,.08);
-    bottom:-80px;
-    right:-60px;
-}
-  
-}
-
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.50rem;
-  flex-shrink: 0;
-  margin-bottom: .5rem;
-
-  .brand-icon {
-    width: 48px;
-    height: 48px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    color: $teal;
-
-    .logo {
-      width: 75px;
-      height: 70px;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-  }
-
-  h1 {
-    font-size: clamp(1.4rem, 2vw, 2rem);
-    font-weight: 900;
-    color: $navy;
-    margin: 0;
-    font-family: "Plus Jakarta Sans", sans-serif;
-
-    span {
-      color: $teal;
-    }
-  }
-}
-
-.tagline {
-  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
-  font-weight: 800;
-  color: $navy;
-  line-height: 1.15;
-  margin: 0;
-  flex-shrink: 0;
-
-  span {
-    color: $teal;
-  }
-}
-
-.subtitle {
-  color: $text-gray;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  max-width: 380px;
-  margin: 0;
-  flex-shrink: 0;
-  margin-bottom: .5rem;
-}
-
-.features {
-  list-style: none;
-  margin-bottom: 1rem;
-  padding: clamp(0.5rem, 1.5vh, 20px) 0;
-  display: flex;
-  flex-direction: column;
-  gap:0.9rem;
-  flex-shrink: 0;
-
-  li {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.85rem;
-    padding-bottom:1rem;
-    border-bottom:1px dashed rgba(15,148,136,.15);
-
-      &:last-child{
-        border-bottom:none;
-    }
-  }
-
-  .feature-icon {
-    flex-shrink: 0;
-    width: 38px;
-    height: 38px;
-    border-radius: 0.75rem;
-    background: rgba(255, 255, 255, 0.6);
-    color: $teal-dark;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  h4 {
-    margin: 0 0 0.15rem;
-    font-size: 0.95rem;
-    color: $navy;
-  }
-
-  p {
-    margin: 0;
-    font-size: 0.85rem;
-    color: $text-gray;
-  }
-}
-
-.illustration {
-   margin-top:auto;
-    width:100%;
-    display:flex;
-    flex : none;
-    justify-content:center;
-    align-items:flex-end;
-    margin-bottom:-1rem;
-    position:relative;
-
-      &::before{
-        content:"";
-        position:absolute;
-        inset:0;
-        background:linear-gradient(
-            to top,
-            rgba(201,238,240,.25),
-            transparent 45%
-        );
-        pointer-events:none;
-    }
-
-  .illustration-img {
-    width:90%;
-    max-width:420px;
-    height: 40vh;
-    object-fit:contain;
-  }
-
-  @media (max-height: 700px) and (min-width: 901px) {
-    display: none;
-  }
-}
-
-.auth-right {
-  flex: 1;
-  min-width: 0;
-  background: #fff;
-  padding: clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 4vw, 3.5rem);
-  display: flex;
+  border-radius: inherit;
   flex-direction: column;
   overflow-y: auto;
 
@@ -256,10 +66,16 @@ body,
     overflow-y: visible;
     padding: 2rem 1.5rem;
   }
+
+  @media (max-width: 480px) {
+    padding: 1.5rem 1.25rem;
+  }
 }
 
 .tabs {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 2rem;
   border-bottom: 1px solid $border-color;
   margin-bottom: clamp(1rem, 3vh, 2rem);
@@ -272,10 +88,20 @@ body,
     text-decoration: none;
     border-bottom: 3px solid transparent;
     transition: all 0.2s ease-in-out;
+    font-size: 1rem;
 
     &.active {
       color: $teal;
       border-bottom-color: $teal;
+    }
+  }
+
+  @media (max-width: 480px) {
+    gap: 1.25rem;
+
+    .tab {
+      font-size: 0.9rem;
+      padding-bottom: 0.65rem;
     }
   }
 }
@@ -283,21 +109,33 @@ body,
 .form-header {
   margin-bottom: clamp(0.75rem, 2vh, 1.5rem);
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  text-align: center;
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 800;
     color: $navy;
     margin: 0 0 0.35rem;
-    display: flex;
-    align-items: center;
     gap: 0.4rem;
   }
 
   p {
     color: $text-gray;
     margin: 0;
-    font-size: 0.95rem;
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.1rem;
+    }
+    p {
+      font-size: 0.7rem;
+    }
   }
 }
 
@@ -306,6 +144,7 @@ body,
   gap: 0.75rem;
   margin-bottom: clamp(0.75rem, 2vh, 1.5rem);
   flex-shrink: 0;
+  flex-wrap: wrap;   // lets icon-only btn drop below gracefully if needed
 
   .social-btn {
     display: flex;
@@ -335,6 +174,7 @@ body,
 
   .google-btn {
     flex: 1;
+    min-width: 140px;
   }
 
   .icon-only {
@@ -344,6 +184,13 @@ body,
 
     svg {
       color: $navy;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .social-btn {
+      font-size: 0.8rem;
+      padding: 0.65rem 0.75rem;
     }
   }
 }
@@ -433,6 +280,21 @@ body,
       }
     }
   }
+
+  @media (max-width: 480px) {
+    .input-wrapper input {
+      padding: 0.85rem 2.6rem;
+      font-size: 0.85rem;   // bump up slightly on mobile for readability/tap accuracy
+    }
+
+    .input-icon,
+    .toggle-password {
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
 }
 
 .form-options {
@@ -441,6 +303,8 @@ body,
   justify-content: space-between;
   font-size: 0.85rem;
   flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 
   .checkbox-label {
     display: flex;
@@ -465,6 +329,10 @@ body,
       text-decoration: underline;
     }
   }
+
+  @media (max-width: 400px) {
+    font-size: 0.8rem;
+  }
 }
 
 .switch-auth {
@@ -482,6 +350,10 @@ body,
       font-weight: 600;
     }
   }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 }
 
 .btn {
@@ -493,6 +365,7 @@ body,
   cursor: pointer;
   font-family: inherit;
   transition: all 0.2s ease-in-out;
+  width: 100%;   // ensures full-width consistently across breakpoints
 
   &.primary-btn {
     background: linear-gradient(135deg, $teal-light, $teal-dark);
@@ -507,6 +380,11 @@ body,
 
   &:active {
     transform: scale(0.97);
+  }
+
+  @media (max-width: 480px) {
+    padding-block: 0.75rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -525,7 +403,7 @@ body,
 }
 
 .form-error {
-  color: #E4626F; // pick a red that fits your dark palette
+  color: #E4626F;
   font-size: 0.85rem;
   margin: -8px 0 4px;
 }
@@ -533,4 +411,14 @@ body,
 .primary-btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+@media (max-width: 360px) {
+  .auth-main {
+    padding: 0.5rem;
+  }
+
+  .auth-right {
+    padding: 1.25rem 1rem;
+  }
 }

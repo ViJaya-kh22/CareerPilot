@@ -10,7 +10,7 @@ export const InterviewProvider = ({children}) =>{
     const [allreports, setAllReports] = useState(null);
 
     return (
-        <InterviewContext.Provider value = {{loading, setLoading, report , setReport}}>
+        <InterviewContext.Provider value = {{loading, setLoading, report , setReport, allreports, setAllReports}}>
             {children}
         </InterviewContext.Provider>
     )

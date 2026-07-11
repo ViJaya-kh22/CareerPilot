@@ -1,41 +1,39 @@
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
-import blacklistModel from "../models/blacklist.model.js";
 
 /**
  * @name authUser
- * @description Verifies the user's JWT, checks if the token is blacklisted, and attaches the decoded user payload to the request object.
+ * @description Verifies the user's access token from the Authorization header and attaches the decoded payload to the request object.
  * @access Private
  */
 async function authUser(req, res, next) {
   try {
-    const token = req.cookies.token;
+    const authHeader = req.headers.authorization;
 
-    if (!token) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({
         message: "Authentication token not found.",
       });
     }
 
-    const isTokenBlacklisted = await blacklistModel.findOne({ token });
+    const accessToken = authHeader.split(" ")[1];
 
-    if (isTokenBlacklisted) {
+    const decoded = jwt.verify(accessToken, config.JWT_ACCESS_SECRET);
+
+    if (decoded.type !== "access") {
       return res.status(401).json({
-        message: "Invalid token.",
+        message: "Invalid token type.",
       });
     }
-
-    const decoded = jwt.verify(token, config.JWT_SECRET);
 
     req.user = decoded;
 
     return next();
-    
+
   } catch (error) {
     console.error("Error in authUser middleware:", error);
-
-    return res.status(500).json({
-      message: "Internal Server Error.",
+    return res.status(401).json({
+      message: "Invalid or expired token.",
     });
   }
 }

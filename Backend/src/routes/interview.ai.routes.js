@@ -2,6 +2,7 @@ import express from 'express';
 import authUser from '../middlewares/auth.middleware.js'
 import * as interviewaiController from '../controllers/interview.ai.controller.js'
 import upload from '../middlewares/pdf.file.middleware.js';
+import { aiLimiter } from '../middlewares/rateLimit.middleware.js';
 
 const interviewRouter = express.Router();
 
@@ -11,7 +12,7 @@ const interviewRouter = express.Router();
  * @desc Generate a personalized AI interview report using the provided job description, resume, and self-description.
  * @access Private
  */
-interviewRouter.post('/', authUser, upload.single("resume") ,interviewaiController.generateInterviewReportController);
+interviewRouter.post('/', authUser, aiLimiter, upload.single("resume") ,interviewaiController.generateInterviewReportController);
 
 /**
  * @route GET /api/interview/report/:interviewId

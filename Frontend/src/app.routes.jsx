@@ -4,6 +4,7 @@ import Register from "./features/auth/pages/Register.jsx";
 import Protected from "./features/auth/components/Protected.jsx";
 import Home from "./features/interview-ai/pages/Home.jsx";
 import InterviewResults from "./features/interview-ai/pages/InterviewResults.jsx";
+import LandingPage from "./features/auth/pages/LandingPage.jsx";
 
 export const router = createBrowserRouter([
  {
@@ -15,15 +16,15 @@ export const router = createBrowserRouter([
     element : <Register />
  },
  {
-   path : "/",
+    path : "/",
+    element : <LandingPage />
+ },
+ {
+   path : "/home",
    element : <Protected><Home/></Protected>
  },
  {
    path : "/interview/:interviewId",
    element : <Protected><InterviewResults/></Protected>
  },
-//  {
-//    path : "/report/:interviewId",
-//    element : <Protected><InterviewResults/></Protected>
-//  },
 ])

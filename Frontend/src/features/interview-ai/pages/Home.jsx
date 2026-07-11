@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import {useNavigate} from 'react-router'
 import '../style/home.scss'
 import {useInterview} from "../hooks/useInterview"
-import { useEffect } from 'react'
+import { useAuth } from "../../auth/hooks/useAuth"
 import logo from "../../../assets/images/logos/logo-light-removebg-preview.png"
 
 function scoreTone(score) {
@@ -14,9 +14,11 @@ function scoreTone(score) {
 const Home = () => {
 
     const {loading,generateInterviewReport , report, allreports, getAllReports} = useInterview();
+    const { handleLogout } = useAuth()
     const [jobDescription, setJobDescription] = useState('')
     const [selfDescription, setSelfDescription] = useState('')
     const [resumeName, setResumeName] = useState('')
+    const [menuOpen, setMenuOpen] = useState(false)
     const resumeInputRef = useRef()
 
     const handleFileChange = (e) => {
@@ -29,59 +31,127 @@ const Home = () => {
     const handleGenerateReport = async () => {
         try {
             const resumeFile = resumeInputRef.current.files[0]
-
-            const report =  await generateInterviewReport({jobDescription, selfDescription, resumeFile})
+            const report = await generateInterviewReport({jobDescription, selfDescription, resumeFile})
 
             if (!report?._id) {
-            console.log("No report id returned — request likely failed")
-            return
-        }
-
+                console.log("No report id returned — request likely failed")
+                return
+            }
             navigate(`/interview/${report._id}`)
         } catch (error) {
             console.log(error)
         }
     }
 
+    const handleLogoutbtn = async () => {
+        try {
+            await handleLogout()
+            navigate('/login')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const goToReport = (id) => {
+        setMenuOpen(false)
+        navigate(`/interview/${id}`)
+    }
 
     useEffect(() => {
-         getAllReports()
-        }, [])
-   
+        getAllReports()
+    }, [])
 
-        if(loading){
+    // lock body scroll while the mobile menu is open
+    useEffect(() => {
+        document.body.style.overflow = menuOpen ? 'hidden' : ''
+        return () => { document.body.style.overflow = '' }
+    }, [menuOpen])
+
+    if(loading){
         return (<main><span>Loading</span><span className='spinner'></span></main>)
     }
 
+   const reportsList = (
+    <>
+        {allreports?.length ? (
+            allreports.map((r) => (
+                <button
+                    key={r._id}
+                    type="button"
+                    className="report-item"
+                    onClick={() => goToReport(r._id)}
+                >
+                    <span className="report-item__info">
+                        <span className="report-item__title">{r.title}</span>
+                        <span className="report-item__date">Generated on {new Date(r.createdAt).toLocaleDateString()}</span>
+                    </span>
+                    <span className={`report-item__score report-item__score--${scoreTone(r.matchScore)}`}>
+                        {r.matchScore}%
+                    </span>
+                </button>
+            ))
+        ) : (
+            <p style={{ color: "gray" , fontSize : '8px' , fontWeight : '500', padding : '2px' }}>NO REPORTS YET.</p>
+        )}
+    </>
+)
+
     return (
         <div className="home-page">
+
+            {/* Mobile top bar — hidden on desktop */}
+            <header className="home-topbar">
+                <button
+                    type="button"
+                    className={`burger-btn ${menuOpen ? 'is-open' : ''}`}
+                    onClick={() => setMenuOpen(o => !o)}
+                    aria-label="Toggle menu"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div className="home-topbar__brand">
+                    <span className="home-topbar__mark"><img src={logo} alt="" /></span>
+                    <span className="home-topbar__name">Career<span>Pilot</span></span>
+                </div>
+
+                <span className="home-topbar__spacer" aria-hidden="true"></span>
+            </header>
+
+            {/* Mobile slide-out menu */}
+            <div className={`mobile-menu-overlay ${menuOpen ? 'is-open' : ''}`} onClick={() => setMenuOpen(false)}>
+                <div className="mobile-menu" onClick={(e) => e.stopPropagation()}>
+                    <span className="mobile-menu__eyebrow">My Reports</span>
+                    <div className="mobile-menu__list">
+                        {reportsList}
+                    </div>
+                    <button type="button" className="logout-btn" onClick={handleLogoutbtn}>
+                        <span className="logout-icon">⎋</span>
+                        <span>Log Out</span>
+                    </button>
+                </div>
+            </div>
+
+            {/* Desktop sidebar */}
             <aside className="home-sidebar">
                 <div className="home-sidebar__brand">
-                    <span ><img  className="home-sidebar-brand-mark" src={logo} alt="" srcSet="" /></span>
-
-                    <span 
-                    className="home-sidebar__name">Career<span>Pilot</span></span>
+                    <span className="home-sidebar__mark"><img src={logo} alt="" /></span>
+                    <span className="home-sidebar__name">Career<span>Pilot</span></span>
                 </div>
 
                 <span className="home-sidebar__eyebrow">My Reports</span>
 
                 <div className="home-sidebar__list">
-                    {report?.map((r) => (
-                        <button
-                            key={r._id}
-                            type="button"
-                            className="report-item"
-                            onClick={() => navigate(`/interview/${r._id}`)}
-                        >
-                            <span className="report-item__info">
-                                <span className="report-item__title">{r.title}</span>
-                                <span className="report-item__date">Generated on {new Date(r.createdAt).toLocaleDateString()}</span>
-                            </span>
-                            <span className={`report-item__score report-item__score--${scoreTone(r.matchScore)}`}>
-                                {r.matchScore}%
-                            </span>
-                        </button>
-                    ))}
+                    {reportsList}
+                </div>
+
+                <div className="home-sidebar__footer">
+                    <button type="button" className="logout-btn" onClick={handleLogout}>
+                        <span className="logout-icon">⎋</span>
+                        <span>Log Out</span>
+                    </button>
                 </div>
             </aside>
 
@@ -99,7 +169,6 @@ const Home = () => {
                 <div className="container">
                     <div className="left">
                         <div className="section-header">
-
                             <h2> Target Job Description</h2>
                             <span className="badge badge--required">Required</span>
                         </div>
@@ -175,7 +244,6 @@ const Home = () => {
                 </div>
 
                 <div className="footer-bar">
-                    {/* <span className='footer-meta'>hellod sksks</span> */}
                     <button
                     onClick={handleGenerateReport}
                     className="generate-btn">

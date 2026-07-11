@@ -57,41 +57,6 @@ const AuthLayout = ({ children }) => {
   return (
     <main className="auth-main">
       <div className="auth-card">
-        <div className="auth-left">
-          <div className="brand">
-            <span className="brand-icon">
-              <img className="logo" src={logoLight} alt="" />
-            </span>
-            <h1>
-              Career<span>Pilot</span>
-            </h1>
-          </div>
-
-          <h3 className="tagline">
-            Navigate Your 
-            <span> Career</span> with <span>Confidence</span>
-          </h3>
-          <p className="subtitle">
-            AI-powered resume analysis, interview preparation, and personalized career guidance all in one place.
-          </p>
-
-          <ul className="features">
-            {features.map((f) => (
-              <li key={f.title}>
-                <span className="feature-icon">{f.icon}</span>
-                <div>
-                  <h4>{f.title}</h4>
-                  <p>{f.desc}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          {/* //illustration */}
-          {/* <div className="illustration" aria-hidden="true">
-            <img src={career} className="illustration-img" alt="" />
-          </div> */}
-        </div>
 
         <div className="auth-right">
           <div className="tabs">

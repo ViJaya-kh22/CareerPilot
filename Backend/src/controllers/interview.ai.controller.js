@@ -11,14 +11,23 @@ export async function generateInterviewReportController(req, res) {
   try {
     
     const pdfFile = req.file?.buffer ?? null;
+    let fileContent = "";
 
-    const parsedResumePdf = await pdfParse(pdfFile);
-    const fileContent = parsedResumePdf.text;
-
+    if(pdfFile){
+     const parsedResumePdf = await pdfParse(pdfFile);
+     fileContent = parsedResumePdf.text;
+    }
+   
     const { selfDescription, jobDescription } = req.body;
 
     if (!jobDescription) {
       return res.status(400).json({ message: "Job description is required." });
+    }
+
+     if (!pdfFile && !selfDescription?.trim()) {
+      return res.status(400).json({
+        message: "Please provide a resume or a self description.",
+      });
     }
 
     const interviewReportAI = await generateInterviewReportMock({

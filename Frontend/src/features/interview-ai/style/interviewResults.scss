@@ -1,7 +1,6 @@
 $bg: #f6f5fbef;
 $surface: #ffffff79;
 $surface-alt: #f0eff7;
-$border: #0f9488;
 $teal: #0f9488;
 $teal-soft: rgba(15, 148, 136, 0.1);
 $text-primary: #1b1a29;
@@ -18,12 +17,18 @@ $sev-low-soft: rgba(15, 148, 136, 0.1);
 $radius-sm: 10px;
 $radius-md: 12px;
 
+$teal: #16978c;
+$teal-light: #e9f7f5;
+$border: rgba(22, 151, 140, 0.35);
+$text: #1d1d1d;
+$muted: #6f6f6f;
+
 $font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
 
 .ir {
   display: flex;
-  height: 100dvh;
+  height: 100vh;
   background: $bg;
   color: $text-primary;
   font-family: $font-body;
@@ -38,9 +43,8 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
   flex-direction: column;
   width: 300px;
   flex-shrink: 0;
-  padding: 24px 16px;
+  padding: 20px 16px;
   border-right: 1px solid $border;
-
 }
 
 .ir-brand {
@@ -50,11 +54,13 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
   padding: 4px 8px 20px;
   margin-bottom: 20px;
   border-bottom: 1px solid $border;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 
   &__mark {
     width: 40px;
     height: 40px;
-
   }
 
   img {
@@ -63,9 +69,15 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
   }
 
   &__name {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 1.5rem;
+    font-weight: 900;
     letter-spacing: -0.01em;
+    text-decoration: none;
+    color: black;
+
+    span {
+      color: $teal;
+    }
   }
 }
 
@@ -73,6 +85,7 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding-bottom: 10px;
 
   &__item {
     display: flex;
@@ -99,6 +112,12 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
       background: $teal-soft;
       color: $teal;
     }
+
+    // separates "Home" (leaves the page) from the in-page tabs below it
+    &--home {
+      padding: 10px 10px;
+      border-radius: $radius-sm;
+    }
   }
 
   &__icon {
@@ -119,9 +138,116 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 12px;
+  padding: 15px 5px 0px;
   border-top: 1px solid $border;
+
+
+  .resume-download-card {
+  padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: $font-body;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: $teal;
+    font-size: 1rem;
+    font-weight: 700;
+    
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__description {
+    color: $text-secondary;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    background-color: $teal-soft;
+    padding: 15px;
+    border-radius: 5px;
+  }
+
+  &__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    
+    span {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: $teal-light;
+      color: $teal;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 0.2px solid $teal;
+    }
+
+  }
+
+}
+
+
+
+.download-btn {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  
+  border: none;
+  border-radius: 10px;
+
+  background: $teal;
+  color: #fff;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: #13867d;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+  .generate-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $teal;
+    color: #fffffff0;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+
+     &:hover {
+      background: #0b7f75;
+      transform: translateY(-2px);
+     }
+  }
 }
 
 .ir-sidebar__eyebrow {
@@ -132,7 +258,7 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
   color: $text-muted;
 }
 
-.ir-sidebar__meta {
+.ir-sidebar__mer {
   font-size: 12px;
   color: $text-secondary;
 }
@@ -142,7 +268,6 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
 // ---------------------------------------------------------------
 .ir-content {
   flex: 1;
-  min-width: 0;
   overflow-y: auto;
   padding: clamp(20px, 3vw, 40px);
 }
@@ -180,12 +305,191 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
     display: none;
   }
 
+  .ir-nav__item--home {
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    border-bottom: none;
+    border-right: 1px solid $border;
+    border-radius: $radius-sm;
+    margin-right: 4px;
+  }
+
   .ir-sidebar__footer {
     display: none;
   }
 
   .ir-content {
     height: auto;
-    overflow: visible;
+    // overflow: visible;
+  }
+}
+
+// ---------------------------------------------------------------
+// Mobile top bar (hamburger + brand)
+// ---------------------------------------------------------------
+.ir-mobile-topbar {
+  display: none;
+}
+
+.menu-btn {
+  display: none;
+}
+
+.close-btn {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .ir-mobile-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    padding: 0 16px;
+    background: $surface-alt;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+    z-index: 1100;
+
+    &__brand {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+
+      img {
+        width: 30px;
+        height: 30px;
+      }
+
+      span {
+        font-size: 1.15rem;
+        font-weight: 900;
+        color: #000;
+        text-decoration: none;
+        text-decoration-line: none;
+
+        span {
+          color: $teal;
+          
+        }
+      }
+    }
+  }
+
+  .menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 8px;
+    // background: $teal-light;
+    color: $text-muted;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  // 1000px breakpoint turned this into a horizontal row for the
+  // tablet tab-bar layout; reset it back to a column here so the
+  // mobile slide-in panel stacks brand / nav / footer vertically.
+  .ir-sidebar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  // brand is already shown in the fixed mobile topbar above,
+  // so hide the in-sidebar version to avoid duplication.
+  .ir-sidebar .ir-brand {
+    display: none;
+  }
+
+  .ir-sidebar .ir-nav {
+    flex-direction: column;
+    overflow-x: visible;
+    margin-top: 44px; // clear the close button sitting at top:16px/32px tall
+  }
+
+  .ir-sidebar .ir-nav__item span:last-child {
+    display: inline;
+  }
+
+  .ir-sidebar .ir-nav__item--home {
+    margin-right: 0;
+    margin-bottom: 8px;
+    padding-bottom: 14px;
+    border-right: none;
+    border-bottom: 1px solid $border;
+    border-radius: 0;
+  }
+
+  .ir-sidebar .ir-sidebar__footer {
+    display: flex;
+  }
+
+  .ir-content {
+    margin-top: 60px; // clear the fixed topbar
+    padding-bottom: 60px;
+  }
+
+  .ir-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 300px;
+    height: 100vh;
+
+    background: $surface-alt;
+
+    transform: translateX(-100%);
+
+    transition: .3s ease;
+
+    z-index: 1300;
+
+    border-right: 1px solid $border;
+
+    padding: 20px 16px;
+  }
+
+  .ir-sidebar.active {
+    transform: translateX(0);
+  }
+
+  .close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: $teal-soft;
+    color: $teal;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1200; // below sidebar (1300), above page content
   }
 }
