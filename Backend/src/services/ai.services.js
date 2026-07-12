@@ -4,6 +4,8 @@ import * as z from "zod";
 import { jobDescription,selfDescription,resume,} from "../mock/mockUserData.js";
 import  mockReport  from "../mock/mockReport.js";
 import puppeteer from 'puppeteer';
+import { execSync } from 'child_process';
+
 
 const ai = new GoogleGenAI({
   apiKey: config.GOOGLE_GEMINI_API_KEY,
@@ -239,7 +241,9 @@ async function generatePdfFromHtml(htmlcontent) {
 
   const browser = await puppeteer.launch();
 
-  const page = await browser.newPage();
+  const page = await browser.newPage({
+     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+  });
 
   await page.setContent(htmlcontent, {waitUntil : 'networkidle0'});
 
