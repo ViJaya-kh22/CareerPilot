@@ -4,7 +4,7 @@ import * as z from "zod";
 import { jobDescription,selfDescription,resume,} from "../mock/mockUserData.js";
 import  mockReport  from "../mock/mockReport.js";
 import puppeteer from 'puppeteer';
-import { execSync } from 'child_process';
+
 
 
 const ai = new GoogleGenAI({
@@ -239,13 +239,13 @@ export async function generateInterviewReportMock({resume , jobDescription, self
 
 async function generatePdfFromHtml(htmlcontent) {
 
-  const browser = await puppeteer.launch();
-
-  const page = await browser.newPage({
+  const browser = await puppeteer.launch({
      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
   });
 
-  await page.setContent(htmlcontent, {waitUntil : 'networkidle0'});
+  const page = await browser.newPage();
+
+  await page.setContent(htmlcontent, {waitUntil : 'domcontentloaded'});
 
   const pdfBuffer = await page.pdf({
      format : 'A4',
