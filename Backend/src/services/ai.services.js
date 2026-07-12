@@ -1,155 +1,159 @@
 import { GoogleGenAI } from "@google/genai";
 import config from "../config/config.js";
 import * as z from "zod";
-import { jobDescription,selfDescription,resume,} from "../mock/mockUserData.js";
-import  mockReport  from "../mock/mockReport.js";
-import puppeteer from 'puppeteer';
-
-
+import {
+  jobDescription,
+  selfDescription,
+  resume,
+} from "../mock/mockUserData.js";
+import mockReport from "../mock/mockReport.js";
+import puppeteer from "puppeteer";
 
 const ai = new GoogleGenAI({
   apiKey: config.GOOGLE_GEMINI_API_KEY,
 });
 
-
-
-export async function generateInterviewReport({resume,jobDescription,selfDescription,}) {
-
+export async function generateInterviewReport({
+  resume,
+  jobDescription,
+  selfDescription,
+}) {
   const interviewReportJsonSchema = {
-  type: "object",
-  properties: {
-    matchScore: {
-      type: "number",
-      description:
-        "A percentage score from 0 to 100 indicating how well the candidate's resume and self-description match the provided job description.",
-    },
-    
-    technicalQuestions: {
-      type: "array",
-      description:
-        "A list of technical interview questions tailored to the job description and the candidate's profile.",
-      items: {
-        type: "object",
-        properties: {
-          question: {
-            type: "string",
-            description:
-              "A realistic technical interview question the interviewer is likely to ask for this specific role.",
-          },
-          intention: {
-            type: "string",
-            description:
-              "Explain what the interviewer is trying to evaluate by asking this question, such as problem-solving, framework knowledge, coding ability, or system design.",
-          },
-          answer: {
-            type: "string",
-            description:
-              "Provide only a concise answering approach, not a full answer. Mention the important topics, concepts, experiences, or structure the candidate should cover while answering. Keep it brief and avoid writing a complete interview response.",
-          },
-        },
-        required: ["question", "intention", "answer"],
+    type: "object",
+    properties: {
+      matchScore: {
+        type: "number",
+        description:
+          "A percentage score from 0 to 100 indicating how well the candidate's resume and self-description match the provided job description.",
       },
-    },
 
-    behavioralQuestions: {
-      type: "array",
-      description:
-        "A list of behavioral interview questions based on the candidate's experience and the company's expectations.",
-      items: {
-        type: "object",
-        properties: {
-          question: {
-            type: "string",
-            description:
-              "A realistic behavioral interview question that may be asked during the interview.",
-          },
-          intention: {
-            type: "string",
-            description:
-              "Explain what personality trait, communication skill, teamwork ability, leadership quality, or work ethic the interviewer wants to assess.",
-          },
-          answer: {
-            type: "string",
-            description:
-              "Provide only a concise answering approach, not a full answer. Mention the important topics, concepts, experiences, or structure the candidate should cover while answering. Keep it brief and avoid writing a complete interview response.",
-          },
-        },
-        required: ["question", "intention", "answer"],
-      },
-    },
-
-    skillGaps: {
-      type: "array",
-      description:
-        "A list of important skills that are missing or weak compared to the job description.",
-      items: {
-        type: "object",
-        properties: {
-          skill: {
-            type: "string",
-            description:
-              "The missing or weak technical or soft skill identified from comparing the candidate profile with the job description.",
-          },
-          severity: {
-            type: "string",
-            enum: ["Low", "Medium", "High"],
-            description:
-              "Indicates how critical this missing skill is for successfully performing the job. High means essential, Medium means important, and Low means optional or nice to have.",
-          },
-        },
-        required: ["skill", "severity"],
-      },
-    },
-
-    preparationPlan: {
-      type: "array",
-      description:
-        "A personalized multi-day interview preparation plan designed to improve the candidate's readiness for this specific job.",
-      items: {
-        type: "object",
-        properties: {
-          day: {
-            type: "number",
-            description:
-              "The day number in the preparation schedule, starting from 1.",
-          },
-          focus: {
-            type: "string",
-            description:
-              "The primary learning objective or topic to focus on during this day.",
-          },
-          tasks: {
-            type: "array",
-            description:
-              "A list of actionable tasks the candidate should complete during the day.",
-            items: {
+      technicalQuestions: {
+        type: "array",
+        description:
+          "A list of technical interview questions tailored to the job description and the candidate's profile.",
+        items: {
+          type: "object",
+          properties: {
+            question: {
               type: "string",
               description:
-                "A specific preparation task such as studying a concept, solving coding problems, building a mini project, or practicing interview questions.",
+                "A realistic technical interview question the interviewer is likely to ask for this specific role.",
+            },
+            intention: {
+              type: "string",
+              description:
+                "Explain what the interviewer is trying to evaluate by asking this question, such as problem-solving, framework knowledge, coding ability, or system design.",
+            },
+            answer: {
+              type: "string",
+              description:
+                "Provide only a concise answering approach, not a full answer. Mention the important topics, concepts, experiences, or structure the candidate should cover while answering. Keep it brief and avoid writing a complete interview response.",
             },
           },
+          required: ["question", "intention", "answer"],
         },
-        required: ["day", "focus", "tasks"],
+      },
+
+      behavioralQuestions: {
+        type: "array",
+        description:
+          "A list of behavioral interview questions based on the candidate's experience and the company's expectations.",
+        items: {
+          type: "object",
+          properties: {
+            question: {
+              type: "string",
+              description:
+                "A realistic behavioral interview question that may be asked during the interview.",
+            },
+            intention: {
+              type: "string",
+              description:
+                "Explain what personality trait, communication skill, teamwork ability, leadership quality, or work ethic the interviewer wants to assess.",
+            },
+            answer: {
+              type: "string",
+              description:
+                "Provide only a concise answering approach, not a full answer. Mention the important topics, concepts, experiences, or structure the candidate should cover while answering. Keep it brief and avoid writing a complete interview response.",
+            },
+          },
+          required: ["question", "intention", "answer"],
+        },
+      },
+
+      skillGaps: {
+        type: "array",
+        description:
+          "A list of important skills that are missing or weak compared to the job description.",
+        items: {
+          type: "object",
+          properties: {
+            skill: {
+              type: "string",
+              description:
+                "The missing or weak technical or soft skill identified from comparing the candidate profile with the job description.",
+            },
+            severity: {
+              type: "string",
+              enum: ["Low", "Medium", "High"],
+              description:
+                "Indicates how critical this missing skill is for successfully performing the job. High means essential, Medium means important, and Low means optional or nice to have.",
+            },
+          },
+          required: ["skill", "severity"],
+        },
+      },
+
+      preparationPlan: {
+        type: "array",
+        description:
+          "A personalized multi-day interview preparation plan designed to improve the candidate's readiness for this specific job.",
+        items: {
+          type: "object",
+          properties: {
+            day: {
+              type: "number",
+              description:
+                "The day number in the preparation schedule, starting from 1.",
+            },
+            focus: {
+              type: "string",
+              description:
+                "The primary learning objective or topic to focus on during this day.",
+            },
+            tasks: {
+              type: "array",
+              description:
+                "A list of actionable tasks the candidate should complete during the day.",
+              items: {
+                type: "string",
+                description:
+                  "A specific preparation task such as studying a concept, solving coding problems, building a mini project, or practicing interview questions.",
+              },
+            },
+          },
+          required: ["day", "focus", "tasks"],
+        },
+      },
+      title: {
+        type: "string",
+        description:
+          "Extract or infer the primary job title from the job description. Return only a concise role name (e.g., 'Frontend Developer', 'Backend Engineer', 'Data Analyst'). Do not include company names, locations, experience levels, or extra formatting.",
       },
     },
-    title : {
-      type : "string",
-      description : "Extract or infer the primary job title from the job description. Return only a concise role name (e.g., 'Frontend Developer', 'Backend Engineer', 'Data Analyst'). Do not include company names, locations, experience levels, or extra formatting."
-    }
-  },
 
-  required: [
-    "matchScore",
-    "technicalQuestions",
-    "behavioralQuestions",
-    "skillGaps",
-    "preparationPlan",
-  ],
-};
+    required: [
+      "matchScore",
+      "technicalQuestions",
+      "behavioralQuestions",
+      "skillGaps",
+      "preparationPlan",
+    ],
+  };
 
-const interviewReportSchema = z.fromJSONSchema(interviewReportJsonSchema);
+  const interviewReportSchema = z.fromJSONSchema(interviewReportJsonSchema);
 
-const prompt = `
+  const prompt = `
     You are an expert interviewer, hiring manager, and career coach.
 
 Your task is to analyze the candidate's profile and generate a structured interview preparation report.
@@ -213,67 +217,92 @@ Important Rules:
 - Return only valid JSON that exactly matches the provided schema.   
 `;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-    config: {
-      responseMimeType: "application/json",
-      responseSchema: interviewReportJsonSchema,
-    },
-  });
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: interviewReportJsonSchema,
+      },
+    });
 
-  const report = JSON.parse(response.text);
-  return report
-};
+    const report = JSON.parse(response.text);
+    return report;
+    
+  } catch (error) {
+    if (
+      error?.status === 429 ||
+      error?.message?.includes("RESOURCE_EXHAUSTED")
+    ) {
+      const quotaError = new Error(
+        "Daily AI request limit reached. Please try again tomorrow.",
+      );
+      quotaError.statusCode = 429;
+      throw quotaError;
+    }
+    throw error;
+  }
+}
 
-export async function generateInterviewReportMock({resume , jobDescription, selfDescription}) {
+export async function generateInterviewReportMock({
+  resume,
+  jobDescription,
+  selfDescription,
+}) {
   if (config.DEV_MODE) {
     console.log("Using Mock Data");
-    return(mockReport) ;
+    return mockReport;
   }
 
   console.log("Calling gemini");
 
   return generateInterviewReport({ resume, jobDescription, selfDescription });
-};
+}
 
 async function generatePdfFromHtml(htmlcontent) {
-
   const browser = await puppeteer.launch({
-     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+    ],
   });
 
   const page = await browser.newPage();
 
-  await page.setContent(htmlcontent, {waitUntil : 'domcontentloaded'});
+  await page.setContent(htmlcontent, { waitUntil: "domcontentloaded" });
 
   const pdfBuffer = await page.pdf({
-     format : 'A4',
-     margin : {
-      top : '15px',
-      bottom :  '15px' ,
-      left :' 15px' ,
-      right: '15px'
-     }
+    format: "A4",
+    margin: {
+      top: "15px",
+      bottom: "15px",
+      left: " 15px",
+      right: "15px",
+    },
   });
 
   await browser.close();
 
-  return pdfBuffer
-
+  return pdfBuffer;
 }
 
-export async function generateReusmePdf({resume, selfDescription, jobDescription}) {
-
+export async function generateReusmePdf({
+  resume,
+  selfDescription,
+  jobDescription,
+}) {
   const resumePdfSchema = {
-  type : "object",
-  properties : {
-    pdfHtml : {
-      type : "string",
-      description :  "A complete, self-contained HTML document for a professional ATS-friendly resume. Include <!DOCTYPE html>, <html>, <head>, and <body> with all CSS embedded inside a <style> tag. Do not use external CSS, JavaScript, images, fonts, or CDN resources. The HTML should be clean, semantic, A4-print optimized, and ready to be converted directly into a PDF using Puppeteer without any additional processing."
-    }
-  }
-};
+    type: "object",
+    properties: {
+      pdfHtml: {
+        type: "string",
+        description:
+          "A complete, self-contained HTML document for a professional ATS-friendly resume. Include <!DOCTYPE html>, <html>, <head>, and <body> with all CSS embedded inside a <style> tag. Do not use external CSS, JavaScript, images, fonts, or CDN resources. The HTML should be clean, semantic, A4-print optimized, and ready to be converted directly into a PDF using Puppeteer without any additional processing.",
+      },
+    },
+  };
 
   const prompt = `You are an expert resume writer, ATS optimization specialist, and technical recruiter.
 
@@ -336,23 +365,20 @@ Candidate Self Description:
 ${selfDescription}
 
 Target Job Description:
-${jobDescription}`
+${jobDescription}`;
 
- const response = await ai.models.generateContent({
-   model: "gemini-2.5-flash",
-   contents : prompt,
-     config: {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: prompt,
+    config: {
       responseMimeType: "application/json",
       responseSchema: resumePdfSchema,
     },
- });
+  });
 
- const jsonPdfContent = JSON.parse(response.text);
+  const jsonPdfContent = JSON.parse(response.text);
 
- const pdfBuffer = await generatePdfFromHtml(jsonPdfContent.pdfHtml)
+  const pdfBuffer = await generatePdfFromHtml(jsonPdfContent.pdfHtml);
 
- return pdfBuffer
-
+  return pdfBuffer;
 }
-
-

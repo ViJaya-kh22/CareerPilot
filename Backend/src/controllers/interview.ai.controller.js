@@ -51,10 +51,12 @@ export async function generateInterviewReportController(req, res) {
 
   } catch (error) {
     console.log("Error in generating interview ", error);
-    res.status(500).json({
-      message: "Error in generating report.",
-    });
-  }
+     return res.status(error.statusCode || 500).json({
+    message: error.statusCode === 429
+      ? error.message
+      : "Failed to generate report. Please try again."
+  });
+ };
 };
 
 
