@@ -151,9 +151,11 @@ export async function generateResumePdfController(req,res) {
   res.send(pdfBuffer)
   } catch (error) {
      console.log("Error in generate interview report pdf :" ,error)
-     res.status(500).json({
-      message : "Conflit in generating interview pdf"
-     })
+      return res.status(error.statusCode || 500).json({
+    message: error.statusCode === 429
+      ? error.message
+      : "Failed to generate report. Please try again."
+  });
   }
   
 }

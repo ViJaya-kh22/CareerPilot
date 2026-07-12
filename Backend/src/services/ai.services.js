@@ -229,7 +229,7 @@ Important Rules:
 
     const report = JSON.parse(response.text);
     return report;
-    
+
   } catch (error) {
     if (
       error?.status === 429 ||
@@ -367,6 +367,7 @@ ${selfDescription}
 Target Job Description:
 ${jobDescription}`;
 
+try {
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
     contents: prompt,
@@ -381,4 +382,18 @@ ${jobDescription}`;
   const pdfBuffer = await generatePdfFromHtml(jsonPdfContent.pdfHtml);
 
   return pdfBuffer;
+  
+} catch (error) {
+  if (
+      error?.status === 429 ||
+      error?.message?.includes("RESOURCE_EXHAUSTED")
+    ) {
+      const quotaError = new Error(
+        "Daily AI request limit reached. Please try again tomorrow.",
+      );
+      quotaError.statusCode = 429;
+      throw quotaError;
+    }
+    throw error;
+}
 }
