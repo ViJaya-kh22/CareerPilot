@@ -80,36 +80,36 @@ const IconLinkedIn = (props) => (
 );
 
 const IconGitHub = (props) => (
- <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="22"
-  height="22"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-8 0C5.27.65 4.09 1 4.09 1A5.07 5.07 0 0 0 4 4.77 5.44 5.44 0 0 0 2.5 8.52c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 18.13V22"/>
-</svg>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-8 0C5.27.65 4.09 1 4.09 1A5.07 5.07 0 0 0 4 4.77 5.44 5.44 0 0 0 2.5 8.52c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 18.13V22" />
+  </svg>
 );
 
 const IconEmail = (props) => (
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="22"
-  height="22"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <rect x="2" y="4" width="20" height="16" rx="2"/>
-  <path d="M22 7L12 13 2 7"/>
-</svg>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <rect x="2" y="4" width="20" height="16" rx="2" />
+    <path d="M22 7L12 13 2 7" />
+  </svg>
 )
 
 
@@ -207,6 +207,12 @@ export default function LandingPage() {
           <div className="cp-hero__ctas">
             <Link to="/login" className="cp-btn cp-btn--primary">Build My Plan</Link>
           </div>
+          <div class="cp-hero__scroll-hint">
+            <span>Explore Features</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 5v14M19 12l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
       </section>
 
@@ -262,23 +268,23 @@ export default function LandingPage() {
       <section className="cp-section">
         <div className="cp-container">
           <div className="interview-container">
-          <div className="cp-cta">
-            <h2>Ready to crush your next interview?</h2>
-            <p>Join job seekers who walked in prepared, not guessing.</p>
-            <Link to="/login" className="cp-btn cp-btn--primary">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />
-              </svg>
-              Generate My Interview Strategy</Link>   
+            <div className="cp-cta">
+              <h2>Ready to crush your next interview?</h2>
+              <p>Join job seekers who walked in prepared, not guessing.</p>
+              <Link to="/login" className="cp-btn cp-btn--primary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />
+                </svg>
+                Generate My Interview Strategy</Link>
+            </div>
           </div>
         </div>
-        </div> 
       </section>
 
       {/* ---------------- Footer ---------------- */}
@@ -301,20 +307,20 @@ export default function LandingPage() {
           </nav>
 
           <div className="cp-footer__social">
-            <a href="https://github.com/ViJaya-kh22" 
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub">
-            <IconGitHub />
-            </a>
-             <a href="https://www.linkedin.com/in/vijaya-khavnekar-711a45369/" 
+            <a href="https://github.com/ViJaya-kh22"
               target="_blank"
-            rel="noopener noreferrer"
-             aria-label="LinkedIn">
-             <IconLinkedIn />
-             </a>
-             <a href="mailto:vijayakhavnekar@gmail.com" 
-             aria-label="Email">
+              rel="noopener noreferrer"
+              aria-label="GitHub">
+              <IconGitHub />
+            </a>
+            <a href="https://www.linkedin.com/in/vijaya-khavnekar-711a45369/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn">
+              <IconLinkedIn />
+            </a>
+            <a href="mailto:vijayakhavnekar@gmail.com"
+              aria-label="Email">
               <IconEmail />
             </a>
           </div>
