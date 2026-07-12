@@ -1,4 +1,4 @@
-import { Link , useNavigate} from "react-router";
+import { Link, useNavigate } from "react-router";
 import AuthLayout from "./AuthLayout";
 import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
@@ -24,35 +24,54 @@ const EyeIcon = () => (
   </svg>
 );
 
-
-
-
 const Login = () => {
-
   const navigate = useNavigate();
 
-  const {loading , handleLogin} = useAuth();
+  const { loading, handleLogin } = useAuth();
 
-  const [email,setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
+  const [errors, setErrors] = useState({});
+
+  const validateField = (name, value) => {
+    let message = "";
+
+    if (name === "email") {
+      if (!value.trim()) message = "Email is required.";
+      else if (!/^\S+@\S+\.\S+$/.test(value)) message = "Enter a valid email.";
+    }
+
+    if (name === "password") {
+      if (!value) message = "Password is required.";
+     else if (value.length < 6) message = "Password must be at least 6 characters.";
+    }
+
+    setErrors((prev) => ({ ...prev, [name]: message }));
+    return message;
+  };
+
+  const handleBlur = (e) => validateField(e.target.name, e.target.value);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleLogin({email,password});
-    navigate('/home');
+
+    const emailError = validateField("email", email);
+    const passwordError = validateField("password", password);
+
+    if (emailError || passwordError) return;
+
+    await handleLogin({ email, password });
+    navigate("/home");
   };
 
   return (
     <AuthLayout>
       <div className="form-header">
-        <h1>
-          Welcome Back
-        </h1>
+        <h1>Welcome Back</h1>
         <p>Continue building your career with AI.</p>
       </div>
-
-
 
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="input-group">
@@ -61,10 +80,18 @@ const Login = () => {
             <span className="input-icon">
               <MailIcon />
             </span>
-            <input 
-            onChange={(e)=> setEmail(e.target.value)}
-            type="text" id="email" name="email" placeholder="you@example.com" />
+            <input
+              onBlur={handleBlur}
+              className={errors.email ? "input-error" : ""}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              type="text"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+            />
           </div>
+          {errors.email && <span className="field-error">{errors.email}</span>}
         </div>
 
         <div className="input-group">
@@ -74,19 +101,29 @@ const Login = () => {
               <LockIcon />
             </span>
             <input
-             onChange={(e)=> setPassword(e.target.value)}
-             type="password" id="password" name="password" placeholder="Enter your password" />
-            {/* <button type="button" className="toggle-password" aria-label="Toggle password visibility">
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              className={errors.password ? "input-error" : ""}
+              onBlur={handleBlur}
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              aria-label="Toggle password visibility"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
               <EyeIcon />
-            </button> */}
+            </button>
           </div>
+          {errors.password && <span className="field-error">{errors.password}</span>}
         </div>
 
-        <button
-         className="btn primary-btn">
+        <button className="btn primary-btn">
           {loading ? <span className="spinner" /> : "Log In"}
-          </button>
-
+        </button>
       </form>
 
       <p className="switch-auth">

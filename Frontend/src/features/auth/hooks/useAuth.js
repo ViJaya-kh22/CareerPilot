@@ -70,26 +70,6 @@ export const useAuth = () =>{
             setLoading(false)
         }
     }
-
-
-    useEffect(() => {
-
-        const restoreSession = async () =>{
-            setLoading(true)
-            try {
-             const data = await refreshToken();
-             setUser(data.user)
-            } catch (error) {
-             console.log(error)
-             setUser(null)
-            }finally{
-            setLoading(false)
-            }
-        }
-
-        restoreSession()
-
-    }, [])
     
 
     return {user, loading, handleRegister, handleLogin, handleLogout, handleLogoutAll}

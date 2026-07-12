@@ -272,7 +272,7 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
   padding: clamp(20px, 3vw, 40px);
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .ir {
     flex-direction: column;
     height: auto;
@@ -339,7 +339,7 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 
   .ir-mobile-topbar {
     display: flex;
@@ -402,16 +402,11 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
     z-index: 1;
   }
 
-  // 1000px breakpoint turned this into a horizontal row for the
-  // tablet tab-bar layout; reset it back to a column here so the
-  // mobile slide-in panel stacks brand / nav / footer vertically.
   .ir-sidebar {
     flex-direction: column;
     align-items: stretch;
   }
 
-  // brand is already shown in the fixed mobile topbar above,
-  // so hide the in-sidebar version to avoid duplication.
   .ir-sidebar .ir-brand {
     display: none;
   }
@@ -419,7 +414,7 @@ $font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
   .ir-sidebar .ir-nav {
     flex-direction: column;
     overflow-x: visible;
-    margin-top: 44px; // clear the close button sitting at top:16px/32px tall
+    margin-top: 44px; 
   }
 
   .ir-sidebar .ir-nav__item span:last-child {

@@ -15,4 +15,6 @@ export const aiLimiter = rateLimit({
   message: { message: "Daily report generation limit reached." },
   standardHeaders: true,
   legacyHeaders: false,
+  skipFailedRequests:true,
+  keyGenerator: (req) => req.user?.id || req.ip,
 });

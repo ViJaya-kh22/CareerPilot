@@ -295,6 +295,21 @@ Rules:
 - If a section has no information, omit it.
 - Preserve factual accuracy while making the resume as competitive as possible.
 
+Layout & Typography Constraints (STRICT — do not deviate):
+- Body font-size: 10.5px to 11.5px. Do not use anything larger for body text.
+- Section headings: 13px to 14px, bold, with 6-8px margin above and 4px margin below.
+- Line-height: 1.35 to 1.45 for body text.
+- Paragraph/bullet spacing: no more than 3-4px between list items.
+- Page margins are fixed at 15px (top/bottom/left/right) — do not add extra padding inside <body> that duplicates this.
+- Use a single-column layout unless a two-column layout better fits one page.
+- If the candidate's content is extensive, prioritize brevity over completeness:
+  prefer 1-2 line bullet points over 3-4 line ones, and include only the
+  most relevant 3-4 bullets per role/project rather than every detail.
+- The final rendered content, at the above font sizes and spacing, MUST fit
+  within a single A4 page (297mm height) including all margins. If the
+  content is too long to fit at these sizes, trim less critical bullet
+  points rather than shrinking fonts below the minimum stated above.
+
 Output Requirements:
 - Return ONLY the HTML document.
 - Do not wrap the response in Markdown or code fences.

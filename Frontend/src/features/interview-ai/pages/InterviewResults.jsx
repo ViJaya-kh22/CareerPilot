@@ -177,7 +177,7 @@ export default function InterviewResults() {
             >
               {loading ? (
                 <span className="download-btn__loading">
-                  Downloading<span className="spinner"></span>
+                 <span className="spinner"></span>
                 </span>
               ) : (
                 <>
@@ -225,6 +225,7 @@ export default function InterviewResults() {
             plan={report?.preparationPlan}
           />
         }
+       
       </main>
     </div>
   );

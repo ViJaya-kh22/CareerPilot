@@ -5,6 +5,13 @@ import config from "../config/config.js";
 import crypto from 'crypto'
 import sessionModel from "../models/session.model.js";
 
+// shared cookie options so all three spots (register/login/refresh) always stay in sync
+const getRefreshCookieOptions = () => ({
+  httpOnly: true,
+  secure: config.NODE_ENV === "production",
+  sameSite: config.NODE_ENV === "production" ? "None" : "Lax",
+  maxAge: 7 * 24 * 60 * 60 * 1000
+});
 
 /**
  * @name registerUserController
@@ -61,12 +68,7 @@ export async function registerUserController(req, res) {
       { expiresIn: '15m' }
     );
 
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: config.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000
-    });
+    res.cookie('refreshToken', refreshToken, getRefreshCookieOptions());
 
     return res.status(201).json({
       message: "User registered successfully.",
@@ -133,12 +135,7 @@ export async function loginUserController(req, res) {
       { expiresIn: '15m' }
     );
 
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: config.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000
-    });
+    res.cookie('refreshToken', refreshToken, getRefreshCookieOptions());
 
     return res.status(200).json({
       message: "User logged in successfully.",
@@ -208,12 +205,7 @@ export async function refreshTokenController(req, res) {
       { expiresIn: '15m' }
     );
 
-    res.cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      secure: config.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000
-    });
+    res.cookie("refreshToken", newRefreshToken, getRefreshCookieOptions());
 
     return res.status(200).json({
       message: "Access token generated successfully.",

@@ -450,7 +450,13 @@ $score-low-soft: rgba(220, 38, 38, 0.1);
 
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content:space-between;
+
+    p{
+      color: $text-muted;
+      font-size: 12px;
+      padding-left: 5px;
+    }
   }
 
   .footer-meta {
@@ -659,6 +665,8 @@ $score-low-soft: rgba(220, 38, 38, 0.1);
     flex-shrink: 0;
   }
 }
+
+
 
 // ---------------------------------------------------------------
 // Breakpoint: switch sidebar <-> topbar+drawer at 900px

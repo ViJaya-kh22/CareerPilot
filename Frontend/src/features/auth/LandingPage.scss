@@ -30,14 +30,8 @@
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-::-webkit-scrollbar {
-  display: none;
-}
 
-html {
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-}
+
 
 .cp-container {
   max-width: 1120px;

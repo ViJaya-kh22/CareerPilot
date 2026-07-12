@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
-import {useNavigate} from 'react-router'
+import { useNavigate } from 'react-router'
 import '../style/home.scss'
-import {useInterview} from "../hooks/useInterview"
+import { useInterview } from "../hooks/useInterview"
 import { useAuth } from "../../auth/hooks/useAuth"
 import logo from "../../../assets/images/logos/logo-light-removebg-preview.png"
 
@@ -13,7 +13,7 @@ function scoreTone(score) {
 
 const Home = () => {
 
-    const {loading,generateInterviewReport , report, allreports, getAllReports} = useInterview();
+    const { loading, generateInterviewReport, report, allreports, getAllReports } = useInterview();
     const { handleLogout } = useAuth()
     const [jobDescription, setJobDescription] = useState('')
     const [selfDescription, setSelfDescription] = useState('')
@@ -31,7 +31,7 @@ const Home = () => {
     const handleGenerateReport = async () => {
         try {
             const resumeFile = resumeInputRef.current.files[0]
-            const report = await generateInterviewReport({jobDescription, selfDescription, resumeFile})
+            const report = await generateInterviewReport({ jobDescription, selfDescription, resumeFile })
 
             if (!report?._id) {
                 console.log("No report id returned — request likely failed")
@@ -67,34 +67,39 @@ const Home = () => {
         return () => { document.body.style.overflow = '' }
     }, [menuOpen])
 
-    if(loading){
-        return (<main><span>Loading</span><span className='spinner'></span></main>)
+    if (loading) {
+        return (
+            <main className="page-loader">
+                <span className="page-loader__spinner"></span>
+                <span className="page-loader__text">Loading</span>
+            </main>
+        );
     }
 
-   const reportsList = (
-    <>
-        {allreports?.length ? (
-            allreports.map((r) => (
-                <button
-                    key={r._id}
-                    type="button"
-                    className="report-item"
-                    onClick={() => goToReport(r._id)}
-                >
-                    <span className="report-item__info">
-                        <span className="report-item__title">{r.title}</span>
-                        <span className="report-item__date">Generated on {new Date(r.createdAt).toLocaleDateString()}</span>
-                    </span>
-                    <span className={`report-item__score report-item__score--${scoreTone(r.matchScore)}`}>
-                        {r.matchScore}%
-                    </span>
-                </button>
-            ))
-        ) : (
-            <p style={{ color: "gray" , fontSize : '8px' , fontWeight : '500', padding : '2px' }}>NO REPORTS YET.</p>
-        )}
-    </>
-)
+    const reportsList = (
+        <>
+            {allreports?.length ? (
+                allreports.map((r) => (
+                    <button
+                        key={r._id}
+                        type="button"
+                        className="report-item"
+                        onClick={() => goToReport(r._id)}
+                    >
+                        <span className="report-item__info">
+                            <span className="report-item__title">{r.title}</span>
+                            <span className="report-item__date">Generated on {new Date(r.createdAt).toLocaleDateString()}</span>
+                        </span>
+                        <span className={`report-item__score report-item__score--${scoreTone(r.matchScore)}`}>
+                            {r.matchScore}%
+                        </span>
+                    </button>
+                ))
+            ) : (
+                <p style={{ color: "gray", fontSize: '8px', fontWeight: '500', padding: '2px' }}>NO REPORTS YET.</p>
+            )}
+        </>
+    )
 
     return (
         <div className="home-page">
@@ -169,7 +174,7 @@ const Home = () => {
                 <div className="container">
                     <div className="left">
                         <div className="section-header">
-                            <h2> Target Job Description</h2>
+                            <h2>Job Description</h2>
                             <span className="badge badge--required">Required</span>
                         </div>
 
@@ -186,15 +191,14 @@ const Home = () => {
                         <div className="tip-banner">
                             <span className="tip-icon">💡</span>
                             <p>
-                                Pro tip: Including "Soft Skills" and "Company Culture" sections
-                                yields better behavioral questions.
+                              Paste the complete job posting for the most accurate interview strategy.
                             </p>
                         </div>
                     </div>
 
                     <div className="right">
                         <div className="section-header">
-                            <h2> Your Profile</h2>
+                            <h2> Your Background</h2>
                             <span className="badge badge--best">Best Results</span>
                         </div>
 
@@ -235,18 +239,20 @@ const Home = () => {
                         <div className="info-banner">
                             <span className="info-icon">ℹ️</span>
                             <p>
-                                Either a <strong>Resume</strong> or a{' '}
-                                <strong>Self-Description</strong> is required to tailor the
-                                interview strategy to your unique background.
+                                For <strong>AI Resume Generation</strong> include your
+                                <strong> Name, Education,
+                                    Skills, Projects, Experience </strong>
+                                or upload a <strong>Resume</strong> for the most accurate result.
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <div className="footer-bar">
+                    <p>⚡ Get AI-powered insights tailored to your target role.</p>
                     <button
-                    onClick={handleGenerateReport}
-                    className="generate-btn">
+                        onClick={handleGenerateReport}
+                        className="generate-btn">
                         Generate My Interview Strategy
                     </button>
                 </div>

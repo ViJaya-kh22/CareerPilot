@@ -150,7 +150,7 @@ const STEPS = [
   {
     icon: IconUpload,
     title: "Upload Your Information",
-    desc: "Add your resume, a target job description, or a quick self-introduction — whatever you have on hand.",
+    desc: "Add your resume, a target job description, or a quick self-introduction- whatever you have on hand.",
   },
   {
     icon: IconReport,

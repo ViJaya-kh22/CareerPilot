@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins&display=swap");
 
 $teal: #0f9488;
 $teal-dark: #0c766c;
@@ -9,6 +9,8 @@ $border-color: #e5eaef;
 $border-color-hover: #d7dee6;
 $bg-page: #eef2f5;
 
+$sev-high: #d5453b;
+$sev-high-soft: rgba(213, 69, 59, 0.1);
 * {
   box-sizing: border-box;
 }
@@ -36,8 +38,8 @@ body,
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-width: 0;              // was 30vw — killed small screens
-  max-width: 480px;          // was 50vw — now a real fixed cap
+  min-width: 0; // was 30vw — killed small screens
+  max-width: 480px; // was 50vw — now a real fixed cap
   max-height: 90vh;
   border-radius: 1rem;
   overflow: hidden;
@@ -144,7 +146,7 @@ body,
   gap: 0.75rem;
   margin-bottom: clamp(0.75rem, 2vh, 1.5rem);
   flex-shrink: 0;
-  flex-wrap: wrap;   // lets icon-only btn drop below gracefully if needed
+  flex-wrap: wrap; // lets icon-only btn drop below gracefully if needed
 
   .social-btn {
     display: flex;
@@ -259,9 +261,14 @@ body,
       font-family: inherit;
       transition: border-color 0.2s ease-in-out;
 
+     &.input-error {
+      border-color: $sev-high !important;
+   
       &:focus {
-        border-color: $teal;
+        border-color: $sev-high !important;
+        box-shadow: 0 0 0 3px $sev-high-soft;
       }
+    }
     }
 
     .toggle-password {
@@ -281,10 +288,19 @@ body,
     }
   }
 
+  .field-error {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: $sev-high;
+      line-height: 1.4;
+    }
+    
   @media (max-width: 480px) {
     .input-wrapper input {
       padding: 0.85rem 2.6rem;
-      font-size: 0.85rem;   // bump up slightly on mobile for readability/tap accuracy
+      font-size: 0.85rem; // bump up slightly on mobile for readability/tap accuracy
     }
 
     .input-icon,
@@ -365,7 +381,7 @@ body,
   cursor: pointer;
   font-family: inherit;
   transition: all 0.2s ease-in-out;
-  width: 100%;   // ensures full-width consistently across breakpoints
+  width: 100%; // ensures full-width consistently across breakpoints
 
   &.primary-btn {
     background: linear-gradient(135deg, $teal-light, $teal-dark);
@@ -399,11 +415,13 @@ body,
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .form-error {
-  color: #E4626F;
+  color: #e4626f;
   font-size: 0.85rem;
   margin: -8px 0 4px;
 }
