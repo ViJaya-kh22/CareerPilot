@@ -23,22 +23,26 @@ An AI-powered interview preparation platform built on the MERN stack, using Goog
 ## Features
 
 - **AI-generated interview reports** — technical and behavioral questions tailored to a job description and candidate profile, with a match score, skill-gap analysis, and a personalized multi-day preparation plan (powered by Google Gemini)
+
 - **ATS-optimized resume generation** — rewrites and tailors an uploaded resume for a target role, exported as a clean, single-page PDF
+
 - **Secure authentication** — JWT access/refresh token rotation, session-based revocation, and rate limiting on auth and AI routes
+
 - **Resume upload** — optional PDF resume parsing to enrich AI context
+
 - **Responsive UI** — light, minimal design system with a teal accent, including a collapsible sidebar for mobile
 
 ---
 
 ## Tech Stack
 
-**Frontend:** React, React Router, SCSS, Vite, Axios
-**Backend:** Node.js, Express, MongoDB (Mongoose)
-**AI:** Google Gemini API
-**Auth:** JWT (access + refresh tokens), httpOnly cookies
-**PDF Generation:** Puppeteer
-**File Uploads:** Multer, pdf-parse
-**Deployment:** Vercel (frontend), Render (backend), MongoDB Atlas (database)
+- **Frontend:** React, React Router, SCSS, Vite, Axios
+- **Backend:** Node.js, Express, MongoDB (Mongoose)
+- **AI:** Google Gemini API
+- **Auth:** JWT (access + refresh tokens), httpOnly cookies
+- **PDF Generation:** Puppeteer
+- **File Uploads:** Multer, pdf-parse
+- **Deployment:** Vercel (frontend), Render (backend), MongoDB Atlas (database)
 
 ---
 
